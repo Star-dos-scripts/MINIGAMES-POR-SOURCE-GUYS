@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>🔥 Chaos Minigames - 10 Jogos 🔥</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+  * { box-sizing: border-box; }
+  body {
+    margin:0; background:#0d0d1a; color:#eee;
+    font-family: 'Orbitron', sans-serif;
+    display:flex; flex-direction: column; min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(90deg, #6e00ff, #00ffd8);
+    padding: 1rem 2rem; text-align: center;
+    font-size: 2.5rem; letter-spacing: 4px;
+    text-transform: uppercase; color:#fff;
+    text-shadow: 0 0 10px #6e00ff, 0 0 20px #00ffd8;
+    user-select:none;
+  }
+  main {
+    flex:1; padding:2rem;
+    max-width:1200px; margin:0 auto;
+    display:grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+    gap:2rem;
+  }
+  .game-card {
+    background:#12122e; border-radius:15px;
+    box-shadow:0 0 10px #6e00ffaa;
+    padding:1.5rem;
+    display:flex; flex-direction: column; justify-content: space-between;
+    cursor: default; user-select:none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #00ffd8ff, 0 0 30px #6e00ffcc;
+  }
+  .game-title {
+    font-size: 1.8rem; font-weight: 700;
+    margin-bottom: 0.8rem; color:#00ffd8;
+    text-align:center;
+  }
+  .game-desc {
+    flex: 0 0 auto;
+    font-size: 1rem; color: #bbb;
+    margin-bottom: 1rem; text-align:center;
+  }
+  .game-area {
+    background: #0d0d1a; border: 2px solid #6e00ff;
+    border-radius: 10px; padding: 1rem;
+    min-height: 160px; color: #eee;
+    font-size: 1.2rem; overflow: auto;
+  }
+  button {
+    background: #6e00ff; border: none;
+    color: white; font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0.5rem auto 0 auto;
+    display: block;
+    box-shadow: 0 0 8px #6e00ff;
+    user-select:none;
+  }
+  button:hover {
+    background: #00ffd8;
+    color: #0d0d1a;
+    box-shadow: 0 0 12px #00ffd8;
+  }
+  /* TicTacToe */
+  .tic-tac-toe {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 6px; max-width: 260px; margin: 0 auto;
+  }
+  .tic-tac-toe button {
+    background: #12122e; border: 2px solid #6e00ff;
+    font-size: 2rem; font-weight: 900; color: #00ffd8;
+    cursor: pointer; padding: 10px 0; border-radius: 8px;
+    box-shadow: inset 0 0 10px #6e00ff;
+  }
+  .tic-tac-toe button:disabled {
+    cursor: not-allowed; color: #6e00ff; box-shadow: none;
+  }
+  /* Memory */
+  .memory-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 10px; max-width: 280px; margin: 0 auto;
+  }
+  .memory-card {
+    background: #12122e; border-radius: 10px;
+    height: 60px; font-size: 2rem; color: #6e00ff;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; user-select: none;
+    box-shadow: 0 0 8px #6e00ff;
+  }
+  .memory-card.flipped, .memory-card.matched {
+    background: #00ffd8; color: #0d0d1a;
+    cursor: default; box-shadow: 0 0 12px #00ffd8;
+  }
+  /* Quiz */
+  .quiz-question {
+    margin-bottom: 1rem; font-weight: 700;
+  }
+  .quiz-options button {
+    margin: 0.3rem 0; width: 100%;
+  }
+  /* Number Race */
+  .number-race-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 8px; max-width: 280px; margin: 0 auto;
+  }
+  .number-race-cell {
+    background: #12122e; border-radius: 10px;
+    height: 50px; font-size: 1.5rem; color: #00ffd8;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; user-select: none;
+    box-shadow: 0 0 8px #00ffd8;
+  }
+  .number-race-cell.correct {
+    background: #6e00ff; color: white;
+    cursor: default; box-shadow: 0 0 12px #6e00ff;
+  }
+  .number-race-cell.incorrect {
+    animation: shake 0.3s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-4px); }
+    50% { transform: translateX(4px); }
+  }
+  /* Forca */
+  .forca-word {
+    letter-spacing: 0.5rem; font-size: 2rem;
+    margin-bottom: 1rem; text-align: center;
+  }
+  .forca-input {
+    width: 50px; font-size: 1.5rem;
+    text-align: center; margin: 0 5px;
+    border: 2px solid #6e00ff; border-radius: 8px;
+    background: #12122e; color: #00ffd8;
+  }
+  .forca-letters {
+    margin-top: 10px; text-align: center;
+  }
+  .forca-letters button {
+    margin: 3px; padding: 0.4rem 0.8rem; font-size: 1rem;
+  }
+  /* Color Clicker */
+  .color-box {
+    width: 120px; height: 120px;
+    margin: 0 auto 1rem auto; border-radius: 15px;
+    box-shadow: 0 0 12px #00ffd8;
+    cursor: pointer; user-select: none;
+  }
+  .color-btns {
+    text-align: center;
+  }
+  .color-btns button {
+    margin: 0.3rem;
+  }
+  footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+    border-top: 1px solid #222;
+    user-select: none;
+  }
+</style>
+</head>
+<body>
+
+<header>🔥 Chaos Minigames - 10 Jogos 🔥</header>
+<main>
+
+<!-- 1. Jogo da Velha -->
+<section class="game-card" id="ticTacToeCard">
+  <div class="game-title">Jogo da Velha</div>
+  <div class="game-desc">Jogue contra o computador! Clique nos quadrados para jogar.</div>
+  <div class="game-area" id="ticTacToeArea">
+    <div class="tic-tac-toe" id="ticTacToeGrid"></div>
+    <button id="ticTacToeReset">Reiniciar</button>
+    <div id="ticTacToeMsg" style="margin-top:10px; text-align:center;"></div>
+  </div>
+</section>
+
+<!-- 2. Clicker Insano -->
+<section class="game-card" id="clickerCard">
+  <div class="game-title">Clicker Insano</div>
+  <div class="game-desc">Clique rápido para marcar pontos e bater recordes.</div>
+  <div class="game-area" style="text-align:center;">
+    <div style="font-size: 3rem; margin-bottom: 15px;" id="clickerScore">0</div>
+    <button id="clickerBtn">Clique Aqui!</button>
+    <button id="clickerReset" style="background:#00ffd8; color:#0d0d1a;">Resetar</button>
+  </div>
+</section>
+
+<!-- 3. Pedra Papel Tesoura -->
+<section class="game-card" id="rpsCard">
+  <div class="game-title">Pedra, Papel ou Tesoura</div>
+  <div class="game-desc">Jogue contra a máquina e veja quem ganha!</div>
+  <div class="game-area" style="text-align:center;">
+    <div>
+      <button class="rpsBtn" data-choice="pedra">✊ Pedra</button>
+      <button class="rpsBtn" data-choice="papel">✋ Papel</button>
+      <button class="rpsBtn" data-choice="tesoura">✌️ Tesoura</button>
+    </div>
+    <div style="margin-top: 15px; font-size: 1.2rem;" id="rpsResult">Faça sua escolha!</div>
+  </div>
+</section>
+
+<!-- 4. Adivinhe o Número -->
+<section class="game-card" id="guessNumberCard">
+  <div class="game-title">Adivinhe o Número</div>
+  <div class="game-desc">Tente acertar o número secreto entre 1 e 100 em menos tentativas.</div>
+  <div class="game-area" style="text-align:center;">
+    <input type="number" id="guessInput" placeholder="Digite um número" min="1" max="100" style="font-size:1.2rem; padding:5px; width: 60%;" />
+    <button id="guessBtn">Chutar</button>
+    <div id="guessResult" style="margin-top:10px; font-weight:700;"></div>
+    <button id="guessReset" style="margin-top:10px; background:#00ffd8; color:#0d0d1a;">Reiniciar</button>
+  </div>
+</section>
+
+<!-- 5. Jogo da Memória -->
+<section class="game-card" id="memoryCard">
+  <div class="game-title">Jogo da Memória</div>
+  <div class="game-desc">Encontre todos os pares o mais rápido possível!</div>
+  <div class="game-area">
+    <div class="memory-grid" id="memoryGrid"></div>
+    <button id="memoryReset" style="margin-top:10px;">Reiniciar</button>
+  </div>
+</section>
+
+<!-- 6. Quiz Rápido -->
+<section class="game-card" id="quizCard">
+  <div class="game-title">Quiz Rápido</div>
+  <div class="game-desc">Teste seus conhecimentos em perguntas rápidas.</div>
+  <div class="game-area" id="quizArea">
+    <div class="quiz-question" id="quizQuestion"></div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div id="quizResult" style="margin-top:10px; font-weight:700; text-align:center;"></div>
+    <button id="quizReset" style="margin-top:10px; background:#00ffd8; color:#0d0d1a;">Reiniciar Quiz</button>
+  </div>
+</section>
+
+<!-- 7. Corrida de Números -->
+<section class="game-card" id="numberRaceCard">
+  <div class="game-title">Corrida de Números</div>
+  <div class="game-desc">Clique nos números em ordem crescente!</div>
+  <div class="game-area">
+    <div class="number-race-grid" id="numberRaceGrid"></div>
+    <div id="numberRaceMsg" style="margin-top:10px; text-align:center; font-weight:bold;"></div>
+    <button id="numberRaceReset" style="margin-top:10px;">Reiniciar</button>
+  </div>
+</section>
+
+<!-- 8. Forca -->
+<section class="game-card" id="forcaCard">
+  <div class="game-title">Jogo da Forca</div>
+  <div class="game-desc">Tente adivinhar a palavra secreta antes de errar 6 vezes.</div>
+  <div class="game-area" style="text-align:center;">
+    <div class="forca-word" id="forcaWord"></div>
+    <div id="forcaLetters"></div>
+    <div id="forcaMsg" style="margin-top:10px; font-weight:bold;"></div>
+    <button id="forcaReset" style="margin-top:10px;">Reiniciar</button>
+  </div>
+</section>
+
+<!-- 9. Color Clicker -->
+<section class="game-card" id="colorClickerCard">
+  <div class="game-title">Color Clicker</div>
+  <div class="game-desc">Clique na caixa para mudar a cor e marcar pontos.</div>
+  <div class="game-area" style="text-align:center;">
+    <div class="color-box" id="colorBox"></div>
+    <div style="font-size: 2rem; margin-bottom: 10px;" id="colorScore">0</div>
+    <div class="color-btns">
+      <button data-color="#6e00ff">Roxo</button>
+      <button data-color="#00ffd8">Ciano</button>
+      <button data-color="#ff006e">Rosa</button>
+      <button data-color="#00ff00">Verde</button>
+    </div>
+    <button id="colorReset" style="margin-top:10px; background:#00ffd8; color:#0d0d1a;">Reiniciar</button>
+  </div>
+</section>
+
+<!-- 10. Contador Simples -->
+<section class="game-card" id="counterCard">
+  <div class="game-title">Contador Simples</div>
+  <div class="game-desc">Clique para aumentar o contador.</div>
+  <div class="game-area" style="text-align:center;">
+    <div style="font-size: 3rem; margin-bottom: 15px;" id="counterValue">0</div>
+    <button id="counterBtn">Aumentar</button>
+    <button id="counterReset" style="background:#00ffd8; color:#0d0d1a;">Resetar</button>
+  </div>
+</section>
+
+</main>
+
+<footer>Feito por Star</footer>
+
+<script>
+/* 1. Jogo da Velha */
+(() => {
+  const grid = document.getElementById('ticTacToeGrid');
+  const msg = document.getElementById('ticTacToeMsg');
+  const resetBtn = document.getElementById('ticTacToeReset');
+  let board, currentPlayer, gameOver;
+
+  function createBoard() {
+    grid.innerHTML = '';
+    board = Array(9).fill('');
+    currentPlayer = 'X';
+    gameOver = false;
+    msg.textContent = "Sua vez: X";
+    for (let i = 0; i < 9; i++) {
+      const btn = document.createElement('button');
+      btn.addEventListener('click', () => handleClick(i));
+      grid.appendChild(btn);
+    }
+  }
+
+  function checkWinner(b, player) {
+    const winPatterns = [
+      [0,1,2],[3,4,5],[6,7,8], // linhas
+      [0,3,6],[1,4,7],[2,5,8], // colunas
+      [0,4,8],[2,4,6]          // diagonais
+    ];
+    return winPatterns.some(pattern => pattern.every(i => b[i] === player));
+  }
+
+  function handleClick(i) {
+    if (gameOver || board[i]) return;
+    board[i] = currentPlayer;
+    updateBoard();
+    if (checkWinner(board, currentPlayer)) {
+      msg.textContent = `Jogador ${currentPlayer} venceu!`;
+      gameOver = true;
+      disableButtons();
+      return;
+    }
+    if (!board.includes('')) {
+      msg.textContent = "Empate!";
+      gameOver = true;
+      return;
+    }
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+    msg.textContent = `Sua vez: ${currentPlayer}`;
+    if (currentPlayer === 'O') {
+      botPlay();
+    }
+  }
+
+  function botPlay() {
+    let emptyIndices = board.map((v,i) => v === '' ? i : -1).filter(i => i !== -1);
+    if (emptyIndices.length === 0) return;
+    let choice = emptyIndices[Math.floor(Math.random()*emptyIndices.length)];
+    setTimeout(() => {
+      if (gameOver) return;
+      board[choice] = 'O';
+      updateBoard();
+      if (checkWinner(board, 'O')) {
+        msg.textContent = "Computador venceu!";
+        gameOver = true;
+        disableButtons();
+        return;
+      }
+      if (!board.includes('')) {
+        msg.textContent = "Empate!";
+        gameOver = true;
+        return;
+      }
+      currentPlayer = 'X';
+      msg.textContent = "Sua vez: X";
+    }, 600);
+  }
+
+  function updateBoard() {
+    [...grid.children].forEach((btn,i) => {
+      btn.textContent = board[i];
+      btn.disabled = board[i] !== '';
+    });
+  }
+
+  function disableButtons() {
+    [...grid.children].forEach(btn => btn.disabled = true);
+  }
+
+  resetBtn.addEventListener('click', () => createBoard());
+  createBoard();
+})();
+
+/* 2. Clicker Insano */
+(() => {
+  const btn = document.getElementById('clickerBtn');
+  const scoreDisplay = document.getElementById('clickerScore');
+  const resetBtn = document.getElementById('clickerReset');
+  let score = 0;
+
+  btn.addEventListener('click', () => {
+    score++;
+    scoreDisplay.textContent = score;
+  });
+  resetBtn.addEventListener('click', () => {
+    score = 0;
+    scoreDisplay.textContent = score;
+  });
+})();
+
+/* 3. Pedra Papel Tesoura */
+(() => {
+  const buttons = document.querySelectorAll('.rpsBtn');
+  const result = document.getElementById('rpsResult');
+
+  function getMachineChoice() {
+    const choices = ['pedra', 'papel', 'tesoura'];
+    return choices[Math.floor(Math.random()*choices.length)];
+  }
+
+  function decideWinner(user, machine) {
+    if(user === machine) return 'Empate!';
+    if(
+      (user === 'pedra' && machine === 'tesoura') ||
+      (user === 'papel' && machine === 'pedra') ||
+      (user === 'tesoura' && machine === 'papel')
+    ) return 'Você venceu!';
+    return 'Você perdeu!';
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const userChoice = btn.dataset.choice;
+      const machineChoice = getMachineChoice();
+      const msg = decideWinner(userChoice, machineChoice);
+      result.textContent = `Você: ${userChoice} - Máquina: ${machineChoice} → ${msg}`;
+    });
+  });
+})();
+
+/* 4. Adivinhe o Número */
+(() => {
+  const input = document.getElementById('guessInput');
+  const btn = document.getElementById('guessBtn');
+  const result = document.getElementById('guessResult');
+  const resetBtn = document.getElementById('guessReset');
+  let secret, tries;
+
+  function reset() {
+    secret = Math.floor(Math.random() * 100) + 1;
+    tries = 0;
+    result.textContent = '';
+    input.value = '';
+    input.disabled = false;
+    btn.disabled = false;
+  }
+  reset();
+
+  btn.addEventListener('click', () => {
+    let guess = Number(input.value);
+    if (!guess || guess < 1 || guess > 100) {
+      result.textContent = 'Digite um número entre 1 e 100!';
+      return;
+    }
+    tries++;
+    if (guess === secret) {
+      result.textContent = `Acertou em ${tries} tentativa(s)! 🎉`;
+      input.disabled = true;
+      btn.disabled = true;
+    } else if (guess > secret) {
+      result.textContent = 'Tente um número menor.';
+    } else {
+      result.textContent = 'Tente um número maior.';
+    }
+  });
+  resetBtn.addEventListener('click', reset);
+})();
+
+/* 5. Jogo da Memória */
+(() => {
+  const grid = document.getElementById('memoryGrid');
+  const resetBtn = document.getElementById('memoryReset');
+  const icons = ['🍎','🍌','🍇','🍉','🍓','🍒','🥝','🍍'];
+  let cards = [];
+  let flipped = [];
+  let matchedPairs = 0;
+  let canFlip = true;
+
+  function shuffle(array) {
+    for(let i = array.length-1; i>0; i--) {
+      const j = Math.floor(Math.random()*(i+1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function setup() {
+    cards = [...icons, ...icons];
+    shuffle(cards);
+    matchedPairs = 0;
+    flipped = [];
+    canFlip = true;
+    grid.innerHTML = '';
+    cards.forEach((icon,i) => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      card.textContent = '';
+      card.dataset.icon = icon;
+      card.dataset.index = i;
+      card.addEventListener('click', () => flipCard(card));
+      grid.appendChild(card);
+    });
+  }
+
+  function flipCard(card) {
+    if (!canFlip) return;
+    if (flipped.includes(card) || card.classList.contains('matched')) return;
+    card.textContent = card.dataset.icon;
+    card.classList.add('flipped');
+    flipped.push(card);
+    if(flipped.length === 2) {
+      canFlip = false;
+      setTimeout(checkMatch, 800);
+    }
+  }
+
+  function checkMatch() {
+    const [card1, card2] = flipped;
+    if(card1.dataset.icon === card2.dataset.icon) {
+      card1.classList.add('matched');
+      card2.classList.add('matched');
+      matchedPairs++;
+      if(matchedPairs === icons.length) {
+        setTimeout(() => alert('Parabéns! Você venceu o Jogo da Memória!'), 200);
+      }
+    } else {
+      card1.textContent = '';
+      card2.textContent = '';
+      card1.classList.remove('flipped');
+      card2.classList.remove('flipped');
+    }
+    flipped = [];
+    canFlip = true;
+  }
+
+  resetBtn.addEventListener('click', setup);
+  setup();
+})();
+
+/* 6. Quiz Rápido */
+(() => {
+  const quizQuestions = [
+    {
+      question: "Qual a cor do céu?",
+      options: ["Verde", "Azul", "Vermelho", "Amarelo"],
+      answer: 1
+    },
+    {
+      question: "Quanto é 2 + 2?",
+      options: ["3", "4", "5", "2"],
+      answer: 1
+    },
+    {
+      question: "Qual é o maior planeta do Sistema Solar?",
+      options: ["Terra", "Júpiter", "Marte", "Saturno"],
+      answer: 1
+    }
+  ];
+  const questionEl = document.getElementById('quizQuestion');
+  const optionsEl = document.getElementById('quizOptions');
+  const resultEl = document.getElementById('quizResult');
+  const resetBtn = document.getElementById('quizReset');
+  let current = 0;
+
+  function loadQuestion() {
+    resultEl.textContent = '';
+    questionEl.textContent = quizQuestions[current].question;
+    optionsEl.innerHTML = '';
+    quizQuestions[current].options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.addEventListener('click', () => checkAnswer(i));
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selected) {
+    if(selected === quizQuestions[current].answer) {
+      resultEl.textContent = 'Correto! 🎉';
+    } else {
+      resultEl.textContent = 'Errado! 😢';
+    }
+    current++;
+    if(current < quizQuestions.length) {
+      setTimeout(loadQuestion, 1500);
+    } else {
+      setTimeout(() => {
+        resultEl.textContent = 'Quiz finalizado! Parabéns!';
+        optionsEl.innerHTML = '';
+      }, 1500);
+    }
+  }
+
+  resetBtn.addEventListener('click', () => {
+    current = 0;
+    loadQuestion();
+  });
+
+  loadQuestion();
+})();
+
+/* 7. Corrida de Números */
+(() => {
+  const grid = document.getElementById('numberRaceGrid');
+  const msg = document.getElementById('numberRaceMsg');
+  const resetBtn = document.getElementById('numberRaceReset');
+  let numbers = [];
+  let currentNumber = 1;
+
+  function shuffle(array) {
+    for(let i = array.length-1; i>0; i--) {
+      const j = Math.floor(Math.random()*(i+1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  function setup() {
+    numbers = [];
+    for(let i=1; i<=16; i++) {
+      numbers.push(i);
+    }
+    shuffle(numbers);
+    currentNumber = 1;
+    msg.textContent = '';
+    grid.innerHTML = '';
+    numbers.forEach(n => {
+      const btn = document.createElement('button');
+      btn.textContent = n;
+      btn.addEventListener('click', () => handleClick(n, btn));
+      grid.appendChild(btn);
+    });
+  }
+
+  function handleClick(num, btn) {
+    if(num === currentNumber) {
+      btn.disabled = true;
+      currentNumber++;
+      if(currentNumber > 16) {
+        msg.textContent = "Você venceu a corrida!";
+      }
+    } else {
+      msg.textContent = `Clique no número ${currentNumber} primeiro!`;
+    }
+  }
+
+  resetBtn.addEventListener('click', setup);
+  setup();
+})();
+
+/* 8. Forca */
+(() => {
+  const words = ["javascript", "programador", "desafio", "internet", "computador"];
+  const wordEl = document.getElementById('forcaWord');
+  const lettersEl = document.getElementById('forcaLetters');
+  const msgEl = document.getElementById('forcaMsg');
+  const resetBtn = document.getElementById('forcaReset');
+  let secretWord = '';
+  let guessed = [];
+  let errors = 0;
+  const maxErrors = 6;
+
+  function setup() {
+    secretWord = words[Math.floor(Math.random()*words.length)];
+    guessed = [];
+    errors = 0;
+    msgEl.textContent = '';
+    wordEl.textContent = secretWord.replace(/./g, '_ ');
+    lettersEl.innerHTML = '';
+    for(let c = 97; c <= 122; c++) {
+      const btn = document.createElement('button');
+      btn.textContent = String.fromCharCode(c);
+      btn.addEventListener('click', () => guessLetter(btn));
+      lettersEl.appendChild(btn);
+    }
+  }
+
+  function guessLetter(btn) {
+    const letter = btn.textContent;
+    btn.disabled = true;
+    if(secretWord.includes(letter)) {
+      guessed.push(letter);
+      updateWord();
+      if(secretWord.split('').every(l => guessed.includes(l))) {
+        msgEl.textContent = "Você venceu! 🎉";
+        disableLetters();
+      }
+    } else {
+      errors++;
+      msgEl.textContent = `Erros: ${errors} de ${maxErrors}`;
+      if(errors >= maxErrors) {
+        msgEl.textContent = `Você perdeu! Palavra: ${secretWord}`;
+        disableLetters();
+      }
+    }
+  }
+
+  function updateWord() {
+    wordEl.textContent = secretWord.split('').map(l => guessed.includes(l) ? l : '_').join(' ');
+  }
+
+  function disableLetters() {
+    [...lettersEl.children].forEach(btn => btn.disabled = true);
+  }
+
+  resetBtn.addEventListener('click', setup);
+  setup();
+})();
+
+/* 9. Color Clicker */
+(() => {
+  const box = document.getElementById('colorBox');
+  const scoreEl = document.getElementById('colorScore');
+  const buttons = document.querySelectorAll('.color-btns button');
+  const resetBtn = document.getElementById('colorReset');
+  let score = 0;
+  let currentColor = '';
+
+  function changeColor(color) {
+    box.style.backgroundColor = color;
+    currentColor = color;
+    score++;
+    scoreEl.textContent = score;
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => changeColor(btn.dataset.color));
+  });
+
+  resetBtn.addEventListener('click', () => {
+    score = 0;
+    scoreEl.textContent = score;
+    box.style.backgroundColor = '';
+    currentColor = '';
+  });
+})();
+
+/* 10. Contador Simples */
+(() => {
+  const valueEl = document.getElementById('counterValue');
+  const btn = document.getElementById('counterBtn');
+  const resetBtn = document.getElementById('counterReset');
+  let count = 0;
+
+  btn.addEventListener('click', () => {
+    count++;
+    valueEl.textContent = count;
+  });
+  resetBtn.addEventListener('click', () => {
+    count = 0;
+    valueEl.textContent = count;
+  });
+})();
+</script>star e um lindao
